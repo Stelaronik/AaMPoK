@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТОП удивительных и загадочных мест Казахстана</title>
+    <style>
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+        
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+        <header> <!-- Шапка и название  -->
+        <h1>Топ 10 удивительных и мистических мест Казахстана</h1>
+        <img src="head.jpg" alt="head">
+        <p>
+            В самом сердце Центральной Азии располагается Казахстан — страна, насыщенная не только богатствами природы и культурным наследием, 
+            но и таинственными местами, пронизанными загадочной энергией. Давайте погрузимся в удивительный мир Казахстана, исследуя десять мистических мест, 
+            каждое из которых носит в себе глубокие сакральные тайны.
+        </p>
+        <hr>
+        </header>
+
+        <main></main>
+    
+        <button onclick="changePage('prev')">НАЗАД</button>
+        <button onclick="changePage('next')">ВПЕРЁД</button>
+
+        <footer> <!-- Кто работал -->
+        <hr>
+        <p>Работали: Царский Вячеслав, Шульгин Данил</p>
+        </footer>
+    <script>
+        let currentPage = 1;
+        const pagesCount = 10; 
+        const pagesContainer = document.querySelector('main');
+
+        function loadContent(pageNumber) {
+            fetch(`info.html`)
+                .then(response => response.text())
+                .then(content => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(content, 'text/html');
+                    
+                    const pageContent = doc.getElementById(pageNumber);
+                    
+                    pagesContainer.innerHTML = pageContent ? pageContent.innerHTML : '';
+                });
+        }
+
+        function changePage(direction) {
+            if (direction === 'next') {
+                currentPage = (currentPage % pagesCount) + 1;
+            } else if (direction === 'prev') {
+                currentPage = (currentPage === 1) ? pagesCount : currentPage - 1;
+            }
+
+            loadContent(currentPage);
+        }
+
+        loadContent(currentPage);
+    </script>
+</body>
+</html>
